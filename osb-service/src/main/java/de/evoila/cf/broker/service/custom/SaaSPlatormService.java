@@ -2,27 +2,39 @@ package de.evoila.cf.broker.service.custom;
 
 import de.evoila.cf.broker.exception.PlatformException;
 import de.evoila.cf.broker.model.Plan;
+import de.evoila.cf.broker.model.Platform;
+import de.evoila.cf.broker.model.ServiceDefinition;
 import de.evoila.cf.broker.model.ServiceInstance;
+import de.evoila.cf.broker.repository.PlatformRepository;
+import de.evoila.cf.broker.service.CatalogService;
 import de.evoila.cf.broker.service.PlatformService;
+import org.assertj.core.util.Maps;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
+import java.util.UUID;
 
 public class SaaSPlatormService implements PlatformService {
 
+    @Autowired
+    private CatalogService catalogService;
+
+    @Autowired(required = false)
+    private PlatformRepository platformRepository;
 
     @Override
     public void registerCustomPlatformService () {
-
+        platformRepository.addPlatform(Platform.SAAS, this);
     }
 
     @Override
     public boolean isSyncPossibleOnCreate (Plan plan) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isSyncPossibleOnDelete (ServiceInstance instance) {
-        return false;
+        return true;
     }
 
     @Override
@@ -32,7 +44,7 @@ public class SaaSPlatormService implements PlatformService {
 
     @Override
     public ServiceInstance postProvisioning (ServiceInstance serviceInstance, Plan plan) throws PlatformException {
-        return null;
+        return serviceInstance;
     }
 
     @Override
@@ -42,15 +54,31 @@ public class SaaSPlatormService implements PlatformService {
 
     @Override
     public ServiceInstance createInstance (ServiceInstance instance, Plan plan, Map<String, String> customParameters) throws PlatformException {
-        if(customParameters.containsKey()){
+        final Map<String, Object> metadata = plan.getMetadata();
+        final String PROVIDER = "provider";
+        if(metadata.containsKey(PROVIDER) && metadata.get(PROVIDER).equals("true") && customParameters.containsKey("url")){
+            String appUrl = customParameters.get("url");
 
+            ServiceDefinition serviceDefinition = new ServiceDefinition();
+            serviceDefinition.setId(UUID.randomUUID().toString());
+            serviceDefinition.setBindable(true);
+            serviceDefinition.setDescription("");
+            serviceDefinition.setName(appUrl);
+
+            Plan servicePlan = new Plan();
+            servicePlan.setId(UUID.randomUUID().toString());
+            servicePlan.setName(appUrl);
+            servicePlan.setPlatform(Platform.SAAS);
+            serviceDefinition.getPlans().add(servicePlan);
+
+            catalogService.getCatalog().getServices().add(serviceDefinition);
         }
-        return null;
+        throw new PlatformException("Not support because not cool of you.");
     }
 
     @Override
     public ServiceInstance getCreateInstancePromise (ServiceInstance instance, Plan plan) {
-        return null;
+        return instance;
     }
 
     @Override
@@ -60,6 +88,6 @@ public class SaaSPlatormService implements PlatformService {
 
     @Override
     public ServiceInstance updateInstance (ServiceInstance instance, Plan plan) {
-        return null;
+        return instance;
     }
 }
