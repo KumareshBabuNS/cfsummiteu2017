@@ -56,7 +56,8 @@ public class SaaSPlatormService implements PlatformService {
     public ServiceInstance createInstance (ServiceInstance instance, Plan plan, Map<String, String> customParameters) throws PlatformException {
         final Map<String, Object> metadata = plan.getMetadata();
         final String PROVIDER = "provider";
-        if(metadata.containsKey(PROVIDER) && metadata.get(PROVIDER).equals("true") && customParameters.containsKey("url")){
+        final boolean isProviderPlan = metadata.containsKey(PROVIDER);
+        if(isProviderPlan && metadata.get(PROVIDER).equals("true") && customParameters.containsKey("url")){
             String appUrl = customParameters.get("url");
 
             ServiceDefinition serviceDefinition = new ServiceDefinition();
@@ -69,9 +70,12 @@ public class SaaSPlatormService implements PlatformService {
             servicePlan.setId(UUID.randomUUID().toString());
             servicePlan.setName(appUrl);
             servicePlan.setPlatform(Platform.SAAS);
+            plan.setMetadata(Maps.newHashMap("url", appUrl));
             serviceDefinition.getPlans().add(servicePlan);
 
             catalogService.getCatalog().getServices().add(serviceDefinition);
+        } else if(!isProviderPlan) {
+            return instance;
         }
         throw new PlatformException("Not support because not cool of you.");
     }
