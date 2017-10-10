@@ -3,9 +3,8 @@
  */
 package de.evoila;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import de.evoila.cf.broker.service.custom.ExampleCustomPropertyHandler;
+import de.evoila.cf.cpi.custom.props.DomainBasedCustomPropertyHandler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.system.ApplicationPidFileWriter;
@@ -13,8 +12,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.Assert;
 
-import de.evoila.cf.cpi.custom.props.DomainBasedCustomPropertyHandler;
-import de.evoila.cf.cpi.custom.props.ExampleCustomPropertyHandler;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Johannes Hiemer.
@@ -41,7 +40,7 @@ public class Application {
 		springApplication.addListeners(new ApplicationPidFileWriter());
 		ApplicationContext ctx = springApplication.run(args);
 
-		Assert.notNull(ctx);
+		Assert.notNull(ctx, "May not be null!");
 	}
 
 }

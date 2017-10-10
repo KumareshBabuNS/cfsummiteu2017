@@ -15,3 +15,5 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 public class MongoDBConfiguration {
 
 }
+
+

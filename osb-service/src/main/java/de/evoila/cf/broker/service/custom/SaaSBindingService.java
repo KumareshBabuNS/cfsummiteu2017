@@ -8,12 +8,14 @@ import de.evoila.cf.broker.repository.ServiceInstanceRepository;
 import de.evoila.cf.broker.service.BindingService;
 import de.evoila.cf.broker.service.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class SaaSBindingService implements BindingService{
+@Service
+public class SaaSBindingService implements BindingService {
     @Autowired
     CatalogService catalogService;
     @Autowired

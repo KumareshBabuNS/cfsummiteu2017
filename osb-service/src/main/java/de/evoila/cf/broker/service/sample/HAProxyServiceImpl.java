@@ -3,6 +3,10 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import de.evoila.cf.broker.bean.HAProxyConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 
 import de.evoila.cf.broker.model.Mode;
@@ -13,6 +17,7 @@ import de.evoila.cf.broker.service.HAProxyService;
  * @author Johannes Hiemer.
  */
 @Service
+@ConditionalOnBean(HAProxyConfiguration.class)
 public class HAProxyServiceImpl extends HAProxyService {
 
 	@Override
