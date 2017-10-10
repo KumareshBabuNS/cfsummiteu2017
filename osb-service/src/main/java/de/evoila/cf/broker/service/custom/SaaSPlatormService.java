@@ -87,6 +87,11 @@ public class SaaSPlatormService implements PlatformService {
 
     @Override
     public void deleteServiceInstance (ServiceInstance serviceInstance) throws PlatformException {
+        ServiceDefinition serviceDefinition = catalogService.getServiceDefinition(serviceInstance.getServiceDefinitionId());
+
+        if(serviceDefinition.getPlans().get(0).getMetadata().get("PROVIDER").equals("true")) {
+            catalogService.getCatalog().getServices().remove(serviceDefinition);
+        }
 
     }
 
