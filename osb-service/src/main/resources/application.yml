@@ -1,24 +1,43 @@
 spring:
-  ### Profile ###
-  profiles: 
-    active: local
-  ### General Information ###
-  application:
-    name: example-dev
-  ### Security ###
-  ssl:
-    acceptSelfSigned: true
-  ### Cloud Config ###
-  cloud:
-    config:
-      uri: ${SPRING_CLOUD_CONFIG_URI:http://localhost:8081}
 
   ### General Information ###
-  info:
-    app:
-      name: Example Service Broker
-      description: This is a example Service Broker, demonstrating the purpose of SB development 
-      version: 1.1.0
+  application:
+    name: saas
+  ### Security ###
+
+  data:
+    mongodb:
+      host: 185.80.184.14
+      port: 5115
+      database: 32412604-7989-435a-bd7e-c2a99ebe0b59
+      username: 080a3474-6550-4d9f-89c9-c3934cfaf1b7
+      password: 8ncloenvsj7b81hdgqvs6o66fv
+
+
+  ssl:
+    acceptSelfSigned: true
+
+  ### Login Information ###
+login:
+  username: admin
+  password: saasb
+  role: USER
 
   server:
     port: 8080
+
+catalog:
+  services:
+  - id: saasb
+    name: SaaSB
+    description: Service instance creates new plan in marketplace. Please add a `url`-parameter.
+    bindable: true
+    dashboard_client:
+      id: sample-saasb
+      secret: sample-saasb
+      redirectUri: http://localhost:8080/sample
+    plans:
+    - id: provider-app
+      name: app-represantative
+      description: The most basic example service plan currently available. Providing 25 MB of capacity in a example service.
+      platform: SAAS

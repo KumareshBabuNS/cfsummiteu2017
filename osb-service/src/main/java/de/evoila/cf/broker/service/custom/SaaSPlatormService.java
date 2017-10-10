@@ -10,10 +10,13 @@ import de.evoila.cf.broker.service.CatalogService;
 import de.evoila.cf.broker.service.PlatformService;
 import org.assertj.core.util.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.Map;
 import java.util.UUID;
 
+@Service
 public class SaaSPlatormService implements PlatformService {
 
     @Autowired
@@ -23,18 +26,19 @@ public class SaaSPlatormService implements PlatformService {
     private PlatformRepository platformRepository;
 
     @Override
+    @PostConstruct
     public void registerCustomPlatformService () {
         platformRepository.addPlatform(Platform.SAAS, this);
     }
 
     @Override
     public boolean isSyncPossibleOnCreate (Plan plan) {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isSyncPossibleOnDelete (ServiceInstance instance) {
-        return true;
+        return false;
     }
 
     @Override
@@ -74,8 +78,10 @@ public class SaaSPlatormService implements PlatformService {
             serviceDefinition.getPlans().add(servicePlan);
 
             catalogService.getCatalog().getServices().add(serviceDefinition);
+
+            return new ServiceInstance(instance,"", UUID.randomUUID().toString());
         } else if(!isProviderPlan) {
-            return instance;
+            return new ServiceInstance(instance,"", UUID.randomUUID().toString());
         }
         throw new PlatformException("Not support because not cool of you.");
     }
