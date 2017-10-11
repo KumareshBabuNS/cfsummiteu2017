@@ -31,5 +31,5 @@ These are:
 - plan_description
 - url
 
-
+To make the new offering available to the other users of the Cloud Foundry installation the platforms operator only has to update the service broker using update-service-broker and enable the new services via enable-service-access to its users.
   
