@@ -63,18 +63,23 @@ public class SaaSPlatormService implements PlatformService {
         final boolean isProviderPlan = metadata.containsKey(PROVIDER);
         if(isProviderPlan && metadata.get(PROVIDER).equals("true") && customParameters.containsKey("url")){
             String appUrl = customParameters.get("url");
-
+            String serviceName = customParameters.get("service_name");
+            String serviceDescription = customParameters.get("service_description");
+            
             ServiceDefinition serviceDefinition = new ServiceDefinition();
             serviceDefinition.setId(UUID.randomUUID().toString());
-            serviceDefinition.setBindable(true);
-            serviceDefinition.setDescription("Service Description");
-            serviceDefinition.setName(appUrl);
+            serviceDefinition.setName(serviceName);
+            serviceDefinition.setDescription(serviceDescription);
+            serviceDefinition.setBindable(false);
+
+            String planName = customParameters.get("plan_name");
+            String planDescription = customParameters.get("plan_description");
 
             Plan servicePlan = new Plan();
             servicePlan.setId(UUID.randomUUID().toString());
-            servicePlan.setName(appUrl);
+            servicePlan.setName(planName);
                 servicePlan.setPlatform(Platform.SAAS);
-            servicePlan.setDescription("Party plan");
+            servicePlan.setDescription(planDescription);
             servicePlan.setMetadata(Maps.newHashMap("url", appUrl));
             serviceDefinition.getPlans().add(servicePlan);
 
