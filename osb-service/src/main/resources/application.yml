@@ -41,3 +41,5 @@ catalog:
       name: app-represantative
       description: The most basic example service plan currently available. Providing 25 MB of capacity in a example service.
       platform: SAAS
+      metadata:
+        provider: "true"
