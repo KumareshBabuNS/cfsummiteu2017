@@ -27,7 +27,7 @@ public class SaaSBindingService implements BindingService {
     @Override
     public ServiceInstanceBindingResponse createServiceInstanceBinding (String bindingId, String instanceId, String serviceId, String planId, boolean generateServiceKey, String route) throws ServiceInstanceBindingExistsException, ServiceBrokerException, ServiceInstanceDoesNotExistException, ServiceDefinitionDoesNotExistException {
         String serviceDefinitionId = repository.getServiceInstance(instanceId).getServiceDefinitionId();
-        Map<String, Object> credentials = catalogService.getServiceDefinition(serviceDefinitionId).getMetadata();
+        Map<String, Object> credentials = catalogService.getServiceDefinition(serviceDefinitionId).getPlans().get(0).getMetadata();
         ServiceInstanceBinding serviceBinding = new ServiceInstanceBinding(bindingId,instanceId,credentials,null);
         bindingRepository.addInternalBinding(serviceBinding);
         return new ServiceInstanceBindingResponse(serviceBinding);

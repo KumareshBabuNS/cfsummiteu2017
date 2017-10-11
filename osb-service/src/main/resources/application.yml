@@ -7,11 +7,16 @@ spring:
 
   data:
     mongodb:
-      host: 185.80.184.14
-      port: 5115
-      database: 32412604-7989-435a-bd7e-c2a99ebe0b59
-      username: 080a3474-6550-4d9f-89c9-c3934cfaf1b7
-      password: 8ncloenvsj7b81hdgqvs6o66fv
+      host: 127.0.01
+      port: 27017
+      database : evoila
+      username: evoila
+      password: evoila
+#      host: 185.80.184.14
+#      port: 5115
+#      database: 32412604-7989-435a-bd7e-c2a99ebe0b59
+#      username: 080a3474-6550-4d9f-89c9-c3934cfaf1b7
+#      password: 8ncloenvsj7b81hdgqvs6o66fv
 
 
   ssl:

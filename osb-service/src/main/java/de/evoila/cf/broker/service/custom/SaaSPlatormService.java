@@ -75,7 +75,7 @@ public class SaaSPlatormService implements PlatformService {
             servicePlan.setName(appUrl);
                 servicePlan.setPlatform(Platform.SAAS);
             servicePlan.setDescription("Party plan");
-            plan.setMetadata(Maps.newHashMap("url", appUrl));
+            servicePlan.setMetadata(Maps.newHashMap("url", appUrl));
             serviceDefinition.getPlans().add(servicePlan);
 
             catalogService.getCatalog().getServices().add(serviceDefinition);
