@@ -10,10 +10,10 @@ Concrete Service logic and binding logic has to be added.
 This service broker has been written during the hackathon at the Cloud Foundry Summit 2017 in Basel.
 
 ## Contributors
-- Yannic Remmet, evoila
 - Christian Brinker, evoila
 - Konstantin Kiess, Volkswagen Financial Services
 - Christian Müller, evoila
+- Yannic Remmet, evoila
 
 ## Start with this example
 1. Clone it.
