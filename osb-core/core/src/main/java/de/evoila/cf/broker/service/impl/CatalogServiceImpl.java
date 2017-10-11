@@ -36,6 +36,10 @@ public class CatalogServiceImpl implements CatalogService {
 		}
 	}
 
+	public void addServiceDefinition(ServiceDefinition serviceDefinition) {
+		serviceDefs.put(serviceDefinition.getId(), serviceDefinition);
+	}
+
 	@Override
 	public Catalog getCatalog() {
 		return catalog;

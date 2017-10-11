@@ -22,5 +22,8 @@ public interface CatalogService {
 	 * @return The service definition or null if it doesn't exist
 	 */
 	ServiceDefinition getServiceDefinition(String serviceId);
+
+
+	void addServiceDefinition(ServiceDefinition serviceDefinition);
 	
 }

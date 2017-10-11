@@ -33,12 +33,12 @@ public class SaaSPlatormService implements PlatformService {
 
     @Override
     public boolean isSyncPossibleOnCreate (Plan plan) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isSyncPossibleOnDelete (ServiceInstance instance) {
-        return false;
+        return true;
     }
 
     @Override
@@ -67,17 +67,19 @@ public class SaaSPlatormService implements PlatformService {
             ServiceDefinition serviceDefinition = new ServiceDefinition();
             serviceDefinition.setId(UUID.randomUUID().toString());
             serviceDefinition.setBindable(true);
-            serviceDefinition.setDescription("");
+            serviceDefinition.setDescription("Service Description");
             serviceDefinition.setName(appUrl);
 
             Plan servicePlan = new Plan();
             servicePlan.setId(UUID.randomUUID().toString());
             servicePlan.setName(appUrl);
-            servicePlan.setPlatform(Platform.SAAS);
+                servicePlan.setPlatform(Platform.SAAS);
+            servicePlan.setDescription("Party plan");
             plan.setMetadata(Maps.newHashMap("url", appUrl));
             serviceDefinition.getPlans().add(servicePlan);
 
             catalogService.getCatalog().getServices().add(serviceDefinition);
+            catalogService.addServiceDefinition(serviceDefinition);
 
             return new ServiceInstance(instance,"", UUID.randomUUID().toString());
         } else if(!isProviderPlan) {
