@@ -1,12 +1,19 @@
-# osb-service-broker-example
+# osb-software-as-a-service-broker
 ## Description
 
-An empty Cloud Foundry Service Broker missing concrete implementation of a distinct service.   
-Supports deployment to OpenStack.  
-Uses MongoDB Database for management.   
+An Cloud Foundry Service Broker implementing the Open Service Broker API missing concrete implementations of a distinct service.   
+Supports sharing applications on Cloud Foundry to be shared with other users of Cloud Foundry via the Cloud Foundry marketplace.  
+Uses MongoDB Database for management of shared service instances as a backend.   
 Configuration files and deployment scripts must be added.  
 Concrete Service logic and binding logic has to be added.  
 
+This service broker has been written during the hackathon at the Cloud Foundry Summit 2017 in Basel.
+
+## Contributors
+- Yannic Remmet, evoila
+- Christian Brinker, evoila
+- Konstantin Kiess, Volkswagen Financial Services
+- Christian Müller, evoila
 
 ## Start with this example
 1. Clone it.
@@ -14,94 +21,15 @@ Concrete Service logic and binding logic has to be added.
 3. Provide a valid configuration. 
 4. Run it or push it to Cloud Foundry.
 
-##### Example Configuratuion
+## Usage
+The service broker assumes to be used by creating an service instance in some space of the SaaS providers spaces inside cloud foundry. This service instance gets provided some parameter provided regarding the service offering which has to be presented in the marketplace via the -c paremeter of cf create-service-instance.
 
-
-    spring:
-      ### Profile ###
-      profiles: defaut
-    
-    ### Persistence ###
-    #### MongoDB ####
-      data:
-        mongodb:
-          host: $host
-          port: 27017
-          database: $authDatabase
-          username: $user
-          password: $password
-    
-    ### Deployment ###
-    #### Existing MongoDB Server/Cluster ####
-    existing:
-      endpoint:
-        hosts: 
-          - 127.0.0.1
-        port: 11111
-        database: foo
-        username: bar
-        password: rol
-    
-    ### Service Key Generation ###
-    #### HAProxy ####
-    haproxy:
-      uri: $haporxyUrl
-      auth:
-        token: $haProxyAuthToken
-    
-    ### Login Information ### 
-    login:
-      username: $authUser
-      password: $authPassword
-      role: USER
-    
-    ## OpenStack Settings ## (OPTIONAL)
-    #openstack:
-    #  endpoint: 
-    #  user:
-    #    username: 
-    #    password: 
-    #    domainName: 
-    #  project:
-    #    domainName: 
-    #    projectName: 
-    #  networkId:
-    #  subnetId: 
-    #  imageId: 
-    #  keypair: 
-    #  cinder:
-    #    az: zone00
-    
-    catalog:
-      services:
-        - id: sample-local
-          name: Sample-local
-          description: Sample Instances
-          bindable: true
-          dashboard: 
-            url: $endpoint_uri
-            auth_endpoint: $uaa_uri
-          dashboard_client:
-            id: sample
-            secret: sample
-            redirect_uri: $endpoint_uri/dashboard/manage
-          plans:
-            - id: sample_s_local
-              name: S
-              description: A simple sample Local plan.
-              free: false
-              volumeSize: 25
-              volumeUnit: M
-              platform: EXISTING_SERVICE
-              connections: 4
-
-
-
-## Start Custom Implementation
-To implement custom service creation behaviour implement a Service that inherits from `ExistingServiceFactory` or `OpenstackPlatformService` or 
-start from scratch with a new CPI by Implementing the `PlatformService`.   
-To manipulate the service binding behaviour you can inherit from `BindingService` or `BindingServiceImpl`.
-For the full framework implementation see the documentaion in [evoila/osb-service-broker](https://github.com/evoila/osb-service-broker)
+These are:
+- service_name
+- service_description
+- plan_name
+- plan_description
+- url
 
 
   
